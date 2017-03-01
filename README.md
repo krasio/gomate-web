@@ -11,7 +11,7 @@ $ ./gomate-web
 [negroni] listening on :8080
 ```
 
-Open http://localhost:8080/?kind=suburb&q=well.
+Open [http://localhost:8080/?kind=suburb&q=we](http://localhost:8080/?kind=suburb&q=we).
 
 # License
 MIT licence.
