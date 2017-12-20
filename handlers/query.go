@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/krasio/gomate"
 	"github.com/soveran/redisurl"
@@ -14,8 +15,12 @@ func query(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query().Get("q")
 
 	// Connect to Redis
-	log.Printf("Using %s.\n", "redis://localhost:9999/0")
-	conn, err := redisurl.ConnectToURL("redis://localhost:9999/0")
+	redisUrl, ok := os.LookupEnv("GOMATE_REDIS_URL")
+	if !ok {
+		redisUrl = "redis://localhost:9999/0"
+	}
+	log.Printf("Using %s.\n", redisUrl)
+	conn, err := redisurl.ConnectToURL(redisUrl)
 	if err != nil {
 		panic(err)
 	}
