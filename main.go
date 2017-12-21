@@ -38,8 +38,9 @@ func main() {
 	}
 
 	go func() {
-		log.Fatal(srv.ListenAndServe())
+		srv.ListenAndServe()
 	}()
+	log.Print("[GOMATE] Listening on :", port)
 
 	killSignal := <-interrupt
 	switch killSignal {
