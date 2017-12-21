@@ -4,14 +4,22 @@ Web app using [Gomate](https://github.com/krasio/gomate).
 # Usage
 Load your data using [gomate-cli](https://github.com/krasio/gomate-cli).
 
+# Build
 ```
-$ go build
+$ make build
+```
+You can provide the following build options:
+* GOMATE_PORT (defaults to 8080)
+* GOMATE_REDIS_URL (defaults to redis://localhost:9999/0)
+* RELEASE (defaults to 0.0.1)
 
+# Run
+```
 $ ./gomate-web 
-[negroni] listening on :8080
+2017/12/21 14:02:40 [GOMATE] commit: 53834b2, build time: 2017-12-21_01:02:37, release: 0.0.1.
 ```
 
-Open [http://localhost:8080/?kind=suburb&q=we](http://localhost:8080/?kind=suburb&q=we).
+Open [http://localhost:8080/?kind=suburb&q=well](http://localhost:8080/?kind=suburb&q=well).
 
 # License
 MIT licence.
