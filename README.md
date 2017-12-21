@@ -8,12 +8,10 @@ Load your data using [gomate-cli](https://github.com/krasio/gomate-cli).
 ```
 $ make build
 ```
-You can provide the following build options:
-* GOMATE_PORT (defaults to 8080)
-* GOMATE_REDIS_URL (defaults to redis://localhost:9999/0)
-* RELEASE (defaults to 0.0.1)
+You can provide RELEASE build option (defaults to 0.0.1).
 
 # Run
+You can provide GOMATE_PORT (defaults to 8080) and GOMATE_REDIS_URL (defaults to redis://localhost:9999/0).
 ```
 $ ./gomate-web 
 2017/12/21 14:02:40 [GOMATE] commit: 53834b2, build time: 2017-12-21_01:02:37, release: 0.0.1.
