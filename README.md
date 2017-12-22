@@ -26,6 +26,7 @@ $ echo "$(minikube ip) gomate.test" | sudo tee -a /etc/hosts
 ```
 
 Open [http://gomate.test/?kind=suburb&q=well](http://gomate.test/?kind=suburb&q=well).
+
 See [https://blog.gopheracademy.com/advent-2017/kubernetes-ready-service/](https://blog.gopheracademy.com/advent-2017/kubernetes-ready-service/) for more.
 
 # License
