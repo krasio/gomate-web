@@ -1,2 +1,4 @@
 gomate-web
+!kubernetes/gomate-web
+kubernetes/gomate-web/tmp.yaml
 data/

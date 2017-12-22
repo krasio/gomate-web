@@ -9,6 +9,7 @@ COMMIT?=$(shell git rev-parse --short HEAD)
 BUILD_TIME?=$(shell date -u '+%Y-%m-%d_%H:%M:%S')
 GOOS?=linux
 GOARCH?=amd64
+CONTAINER_IMAGE?=docker.io/krasio/${APP}
 
 clean:
 	rm -f ${APP}
@@ -20,7 +21,10 @@ build: clean
 		-o ${APP}
 
 container: build
-	docker build -t $(APP):$(RELEASE) .
+	docker build -t $(CONTAINER_IMAGE):$(RELEASE) .
+
+push: container
+	docker push $(CONTAINER_IMAGE):$(RELEASE)
 
 run: container
 	docker stop $(APP) || true && docker rm $(APP) || true
@@ -33,6 +37,16 @@ run: container
 stop:
 	docker stop $(APP) || true
 	docker stop gomate-redis || true
+
+minikube: push
+				for t in $(shell find ./kubernetes/gomate-web -type f -name "*.yaml"); do \
+				cat $$t | \
+								sed -E "s/\{\{\.Release\}\}/$(RELEASE)/g" | \
+								sed -E "s/\{\{\.ServiceName\}\}/$(APP)/g" | \
+								sed -E "s/\{\{\.Port\}\}/$(PORT)/g"; \
+				echo ---; \
+		done > kubernetes/gomate-web/tmp.yaml
+				kubectl apply -f kubernetes/gomate-web/tmp.yaml
 
 test:
 	go test -v -race ./...

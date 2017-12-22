@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{.ServiceName}}
+  labels:
+    app: {{.ServiceName}}
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 50%
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: {{.ServiceName}}
+    spec:
+      containers:
+      - name: {{.ServiceName}}
+        image: docker.io/krasio/{{.ServiceName}}:{{.Release}}
+        imagePullPolicy: Always
+        env:
+        - name: GOMATE_PORT
+          value: "{{.Port}}"
+        - name: GOMATE_REDIS_URL
+          value: "redis://{{.ServiceName}}-redis:6379"
+        ports:
+        - containerPort: {{.Port}}
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: {{.Port}}
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: {{.Port}}
+        resources:
+          limits:
+            cpu: 10m
+            memory: 30Mi
+          requests:
+            cpu: 10m
+            memory: 30Mi
+      terminationGracePeriodSeconds: 30
